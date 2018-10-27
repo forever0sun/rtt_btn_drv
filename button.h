@@ -1,7 +1,6 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "include.h"
 
 #define BTN_NAME_MAX  32     //名字最大为32字节
 

@@ -51,7 +51,7 @@ void Button_Create(const char *name,
   if( btn == RT_NULL)
   {
     RT_DEBUG_LOG(RT_DEBUG_THREAD,("struct button is RT_NULL!"));
-    ASSERT(ASSERT_ERR);
+//    ASSERT(ASSERT_ERR);
   }
   
   memset(btn, 0, sizeof(struct button));  //清除结构体信息，建议用户在之前清除
