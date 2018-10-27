@@ -1,7 +1,7 @@
 /************************************************************
   * @brief   按键驱动
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -19,7 +19,7 @@
  *                          变量声明                               
  *******************************************************************/
 
-static struct button* Head_Button = NULL;
+static struct button* Head_Button = RT_NULL;
 
 
 /*******************************************************************
@@ -36,21 +36,21 @@ static void Add_Button(Button_t* btn);
 	* @param   btn : 按键结构体
   * @param   read_btn_level : 按键电平读取函数，需要用户自己实现返回rt_uint8_t类型的电平
   * @param   btn_trigger_level : 按键触发电平
-  * @return  NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
   * @version v1.0
-  * @note    NULL
+  * @note    RT_NULL
   ***********************************************************/
 void Button_Create(const char *name,
                   Button_t *btn, 
                   rt_uint8_t(*read_btn_level)(void),
                   rt_uint8_t btn_trigger_level)
 {
-  if( btn == NULL)
+  if( btn == RT_NULL)
   {
-    RT_DEBUG_LOG(RT_DEBUG_THREAD,("struct button is null!"));
+    RT_DEBUG_LOG(RT_DEBUG_THREAD,("struct button is RT_NULL!"));
     ASSERT(ASSERT_ERR);
   }
   
@@ -80,7 +80,7 @@ void Button_Create(const char *name,
 	* @param   btn : 按键结构体
 	* @param   btn_event : 按键触发事件
   * @param   btn_callback : 按键触发之后的回调处理函数。需要用户实现
-  * @return  NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -88,9 +88,9 @@ void Button_Create(const char *name,
   ***********************************************************/
 void Button_Attach(Button_t *btn,Button_Event btn_event,Button_CallBack btn_callback)
 {
-  if( btn == NULL)
+  if( btn == RT_NULL)
   {
-    RT_DEBUG_LOG(RT_DEBUG_THREAD,("struct button is null!"));
+    RT_DEBUG_LOG(RT_DEBUG_THREAD,("struct button is RT_NULL!"));
 //    ASSERT(ASSERT_ERR);       //断言
   }
   
@@ -107,13 +107,13 @@ void Button_Attach(Button_t *btn,Button_Event btn_event,Button_CallBack btn_call
 
 /************************************************************
   * @brief   删除一个已经创建的按键
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
   * @version v1.0
-  * @note    NULL
+  * @note    RT_NULL
   ***********************************************************/
 void Button_Delete(Button_t *btn)
 {
@@ -134,8 +134,8 @@ void Button_Delete(Button_t *btn)
 
 /************************************************************
   * @brief   获取按键触发的事件
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -160,8 +160,8 @@ rt_uint8_t Get_Button_Event(Button_t *btn)
 
 /************************************************************
   * @brief   获取按键触发的事件
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -175,7 +175,7 @@ rt_uint8_t Get_Button_State(Button_t *btn)
 /************************************************************
   * @brief   按键周期处理函数
   * @param   btn:处理的按键
-  * @return  NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -335,8 +335,8 @@ void Button_Cycle_Process(Button_t *btn)
 
 /************************************************************
   * @brief   遍历的方式扫描按键，不会丢失每个按键
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -346,7 +346,7 @@ void Button_Cycle_Process(Button_t *btn)
 void Button_Process(void)
 {
   struct button* pass_btn;
-  for(pass_btn = Head_Button; pass_btn != NULL; pass_btn = pass_btn->Next)
+  for(pass_btn = Head_Button; pass_btn != RT_NULL; pass_btn = pass_btn->Next)
   {
       Button_Cycle_Process(pass_btn);
   }
@@ -354,18 +354,18 @@ void Button_Process(void)
 
 /************************************************************
   * @brief   遍历按键
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
   * @version v1.0
-  * @note    NULL
+  * @note    RT_NULL
   ***********************************************************/
 void Search_Button(void)
 {
   struct button* pass_btn;
-  for(pass_btn = Head_Button; pass_btn != NULL; pass_btn = pass_btn->Next)
+  for(pass_btn = Head_Button; pass_btn != RT_NULL; pass_btn = pass_btn->Next)
   {
     RT_DEBUG_LOG(RT_DEBUG_THREAD,("button node have %s",pass_btn->Name));
   }
@@ -373,8 +373,8 @@ void Search_Button(void)
 
 /************************************************************
   * @brief   处理所有按键回调函数
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
@@ -437,13 +437,13 @@ void Button_Process_CallBack(void *btn)
 
 /************************************************************
   * @brief   拷贝指定长度字符串
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
   * @version v1.0
-  * @note    NULL
+  * @note    RT_NULL
   ***********************************************************/
 static char *StrnCopy(char *dst, const char *src, rt_uint32_t n)
 {
@@ -466,13 +466,13 @@ static char *StrnCopy(char *dst, const char *src, rt_uint32_t n)
 
 /************************************************************
   * @brief   打印按键相关信息
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
   * @version v1.0
-  * @note    NULL
+  * @note    RT_NULL
   ***********************************************************/
 static void Print_Btn_Info(Button_t* btn)
 {
@@ -493,13 +493,13 @@ static void Print_Btn_Info(Button_t* btn)
 }
 /************************************************************
   * @brief   使用单链表将按键连接起来
-	* @param   NULL
-  * @return  NULL
+	* @param   RT_NULL
+  * @return  RT_NULL
   * @author  jiejie
   * @github  https://github.com/jiejieTop
   * @date    2018-xx-xx
   * @version v1.0
-  * @note    NULL
+  * @note    RT_NULL
   ***********************************************************/
 static void Add_Button(Button_t* btn)
 {
