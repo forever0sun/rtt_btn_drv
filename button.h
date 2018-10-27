@@ -1,6 +1,10 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
+#include <rthw.h>
+#include <rtthread.h>
+#include <rtdevice.h>
+#include <string.h>
 
 #define BTN_NAME_MAX  32     //名字最大为32字节
 

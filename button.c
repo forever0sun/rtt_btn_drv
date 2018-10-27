@@ -8,10 +8,6 @@
   * @version v1.0
   * @note    button.c
   ***********************************************************/
-#include <rthw.h>
-#include <rtthread.h>
-#include <rtdevice.h>
-#include <string.h>
 
 #include "button.h"
 
