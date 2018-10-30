@@ -1,7 +1,8 @@
 # rtt_btn_drv
 rtt packages button drive
 自己写的一个按键驱动，支持单双击、连按、长按；采用回调处理按键事件（自定义消抖时间），使用只需3步，创建按键，按键事件与回调处理函数链接映射，周期检查按键。
-源码地址：[https://github.com/jiejieTop/ButtonDrive](https://github.com/jiejieTop/ButtonDrive)
+源码地址：[https://github.com/jiejieTop/ButtonDrive](https://github.com/jiejieTop/ButtonDrive)。作者:[杰杰](https://github.com/jiejieTop)
+
 
 ## 前言
 前几天写了个按键驱动，参考了[MulitButton](https://github.com/0x1abin/MultiButton)的数据结构的用法，逻辑实现并不一样。
