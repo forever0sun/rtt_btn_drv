@@ -3,7 +3,7 @@
 
 /**
   ******************************************************************
-													   变量声明
+                              Variable declaration
   ******************************************************************
   */ 
 
@@ -13,7 +13,7 @@ Button_t Button2;
 
 /**
   ******************************************************************
-														函数声明
+                             Function declaration
   ******************************************************************
   */ 
   
@@ -21,56 +21,56 @@ static void BSP_Init(void);
 
 void Btn1_Dowm_CallBack(void *btn)
 {
-  PRINT_INFO("Button1 单击!");
+  PRINT_INFO("Button1 Click!");
 }
 
 void Btn1_Double_CallBack(void *btn)
 {
-  PRINT_INFO("Button1 双击!");
+  PRINT_INFO("Button1 Double click!");
 }
 
 void Btn1_Long_CallBack(void *btn)
 {
-  PRINT_INFO("Button1 长按!");
+  PRINT_INFO("Button1 Long press!");
 }
 
 void Btn1_Continuos_CallBack(void *btn)
 {
-  PRINT_INFO("Button1 连按!");
+  PRINT_INFO("Button1 Press continuously!");
 }
 void Btn1_ContinuosFree_CallBack(void *btn)
 {
-  PRINT_INFO("Button1 连按释放!");
+  PRINT_INFO("Button1 Press continuously free!");
 }
 
 
 void Btn2_Dowm_CallBack(void *btn)
 {
-  PRINT_INFO("Button2 单击!");
+  PRINT_INFO("Button2 Click!");
 }
 
 void Btn2_Double_CallBack(void *btn)
 {
-  PRINT_INFO("Button2 双击!");
+  PRINT_INFO("Button2 Double click!");
 }
 
 void Btn2_Long_CallBack(void *btn)
 {
-  PRINT_INFO("Button2 长按!");
+  PRINT_INFO("Button2 Long press!");
 }
 
 void Btn2_Continuos_CallBack(void *btn)
 {
-  PRINT_INFO("Button2 连按!");
+  PRINT_INFO("Button2 Press continuously!");
 }
 void Btn2_ContinuosFree_CallBack(void *btn)
 {
-  PRINT_INFO("Button2 连按释放!");
+  PRINT_INFO("Button2 Press continuously free!");
 }
 
 /**
   ******************************************************************
-  * @brief   主函数
+  * @brief   main
   * @author  jiejie
   * @version V1.0
   * @date    2018-xx-xx
@@ -80,41 +80,41 @@ int main(void)
 {
   uint32_t i = 100000;
   
-	BSP_Init();
+  BSP_Init();
   
   Button_Create("Button1",
               &Button1, 
               Read_KEY1_Level, 
               KEY_ON);
-  Button_Attach(&Button1,BUTTON_DOWM,Btn1_Dowm_CallBack);                       //单击
-  Button_Attach(&Button1,BUTTON_DOUBLE,Btn1_Double_CallBack);                   //双击
-  Button_Attach(&Button1,BUTTON_CONTINUOS,Btn1_Continuos_CallBack);             //连按  
-  Button_Attach(&Button1,BUTTON_CONTINUOS_FREE,Btn1_ContinuosFree_CallBack);    //连按释放  
-  Button_Attach(&Button1,BUTTON_LONG,Btn1_Long_CallBack);                       //长按
+  Button_Attach(&Button1,BUTTON_DOWM,Btn1_Dowm_CallBack);                       //Click
+  Button_Attach(&Button1,BUTTON_DOUBLE,Btn1_Double_CallBack);                   //Double click
+  Button_Attach(&Button1,BUTTON_CONTINUOS,Btn1_Continuos_CallBack);             //Press continuously
+  Button_Attach(&Button1,BUTTON_CONTINUOS_FREE,Btn1_ContinuosFree_CallBack);    //Press continuously free
+  Button_Attach(&Button1,BUTTON_LONG,Btn1_Long_CallBack);                       //Long press
 
 
   Button_Create("Button2",
               &Button2, 
               Read_KEY2_Level, 
               KEY_ON);
-  Button_Attach(&Button2,BUTTON_DOWM,Btn2_Dowm_CallBack);                     //单击
-  Button_Attach(&Button2,BUTTON_DOUBLE,Btn2_Double_CallBack);                 //双击
-  Button_Attach(&Button2,BUTTON_CONTINUOS,Btn2_Continuos_CallBack);           //连按
-  Button_Attach(&Button2,BUTTON_CONTINUOS_FREE,Btn2_ContinuosFree_CallBack);  //连按释放
-  Button_Attach(&Button2,BUTTON_LONG,Btn2_Long_CallBack);                     //长按
+  Button_Attach(&Button2,BUTTON_DOWM,Btn2_Dowm_CallBack);                     //Click
+  Button_Attach(&Button2,BUTTON_DOUBLE,Btn2_Double_CallBack);                 //Double click
+  Button_Attach(&Button2,BUTTON_CONTINUOS,Btn2_Continuos_CallBack);           //Press continuously
+  Button_Attach(&Button2,BUTTON_CONTINUOS_FREE,Btn2_ContinuosFree_CallBack);  //Press continuously free
+  Button_Attach(&Button2,BUTTON_LONG,Btn2_Long_CallBack);                     //Long press
 
   Get_Button_Event(&Button1);
   Get_Button_Event(&Button2);
 
-	while(1)                            
-	{
+  while(1)                            
+  {
 
-    Button_Process();     //需要周期调用按键处理函数
+    Button_Process();     //Need to call the button handler function periodically
 
     Delay_ms(20);
     
     
-	}
+  }
 }
 
 /**
@@ -127,19 +127,19 @@ int main(void)
   */ 
 static void BSP_Init(void)
 {
-	/* LED 初始化 */
-	LED_GPIO_Config();
-	
-	/* 串口初始化 */
-	USART_Config();
+  /* LED Config */
+  LED_GPIO_Config();
   
-	/* 按键初始化 */
+  /* USART Config */
+  USART_Config();
+  
+  /* button config */
   Key_GPIO_Config();
   
-	
-	/* 打印信息 */
-	PRINT_INFO("welcome to learn jiejie stm32 library!\n");
-	
+  
+ /* print info */
+  PRINT_INFO("welcome to learn jiejie stm32 library!\n");
+  
 }
 
 

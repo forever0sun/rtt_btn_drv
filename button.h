@@ -8,40 +8,44 @@
 
 #define BTN_NAME_MAX  32     //名字最大为32字节
 
-/* 按键消抖时间40ms, 建议调用周期为20ms
- 只有连续检测到40ms状态不变才认为有效，包括弹起和按下两种事件
+/* 
+The button debounce time is 40ms, the recommended calling period is 20ms.
+It is considered valid only if the 40ms state is continuously detected, including bounce and press.
 */
 
-//#define CONTINUOS_TRIGGER               //是否支持连续触发，连发的话就不要检测单双击与长按了	
+//#define CONTINUOS_TRIGGER               //Whether to support continuous triggering, do not detect single-click and long-press if you send even
 
-/* 是否支持单击&双击同时存在触发，如果选择开启宏定义的话，单双击都回调，只不过单击会延迟响应，
-   因为必须判断单击之后是否触发了双击否则，延迟时间是双击间隔时间 BUTTON_DOUBLE_TIME。
-   而如果不开启这个宏定义，建议工程中只存在单击/双击中的一个，否则，在双击响应的时候会触发一次单击，
-   因为双击必须是有一次按下并且释放之后才产生的 */
+/* Whether to support click and double-click while there is a trigger,
+if you choose to enable the macro definition, single-click double-clickback, but click will delay the response.
+Because it must be judged whether a double click is triggered after clicking, the delay time is the double-click interval BUTTON_DOUBLE_TIME.
+If you do not enable this macro definition, it is recommended that there is only one click/double click in the project. 
+Otherwise, a click will be triggered when the response is double-clicked.Because the double click must be generated after one press and release.
+*/
+
 //#define SINGLE_AND_DOUBLE_TRIGGER      
 
-/* 是否支持长按释放才触发，如果打开这个宏定义，那么长按释放之后才触发单次长按，
-   否则在长按指定时间就一直触发长按，触发周期由 BUTTON_LONG_CYCLE 决定 */
+/* Whether long-press release is supported or not. If this macro definition is turned on, a long press is triggered after a long press release.
+    Otherwise, long press is triggered for a long time, the trigger period is determined by BUTTON_LONG_CYCLE*/
 //#define LONG_FREE_TRIGGER              
 
 #ifndef  BUTTON_DEBOUNCE_TIME
-#define BUTTON_DEBOUNCE_TIME 	  2   //消抖时间      (n-1)*调用周期
+#define BUTTON_DEBOUNCE_TIME   2   //Debounce time  (n-1)*call cycle
 #endif
 
 #ifndef  BUTTON_CONTINUOS_CYCLE
-#define BUTTON_CONTINUOS_CYCLE  1	  //连按触发周期时间  (n-1)*调用周期  
+#define BUTTON_CONTINUOS_CYCLE  1  //Double-click the trigger cycle time  (n-1)*call cycle
 #endif
 
 #ifndef  BUTTON_LONG_CYCLE
-#define BUTTON_LONG_CYCLE       1	  //长按触发周期时间  (n-1)*调用周期 
+#define BUTTON_LONG_CYCLE       1  //Long press trigger cycle time   (n-1)*call cycle
 #endif
 
 #ifndef  BUTTON_DOUBLE_TIME
-#define BUTTON_DOUBLE_TIME      15 	//双击间隔时间  (n-1)*调用周期  建议在200-600ms
+#define BUTTON_DOUBLE_TIME      15 //Double click interval  (n-1)*call cycle  Recommended at 200-600ms
 #endif
 
 #ifndef BUTTON_LONG_TIME
-#define BUTTON_LONG_TIME 	      50		/* 持续n秒((n-1)*调用周期 ms)，认为长按事件 */
+#define BUTTON_LONG_TIME       50/* For n seconds ((n-1)*call cycle)ms, think long press event */
 #endif
 
 
@@ -49,7 +53,7 @@
         if(btn->CallBack_Function[event]) \
           btn->CallBack_Function[event]((Button_t*)btn)
 
-typedef void (*Button_CallBack)(void*);   /* 按键触发回调函数，需要用户实现 */
+typedef void (*Button_CallBack)(void*);   /* The button triggers the callback function and needs to be implemented by the user. */
 
 
 
@@ -62,36 +66,36 @@ typedef enum {
   BUTTON_CONTINUOS,
   BUTTON_CONTINUOS_FREE,
   BUTTON_ALL_RIGGER,
-  number_of_event, /* 触发回调的事件 */
+  number_of_event, /* The event that triggered the callback */
   NONE_TRIGGER
 }Button_Event;
 
 /*
-	每个按键对应1个全局的结构体变量。
-	其成员变量是实现滤波和多种按键状态所必须的
+  Each button corresponds to a global structure variable.
+  Its member variables are necessary to implement filtering and multiple button states.
 */
 typedef struct button
 {
-	/* 下面是一个函数指针，指向判断按键手否按下的函数 */
-	rt_uint8_t (*Read_Button_Level)(void); /* 读取按键电平函数，需要用户实现 */
+  /* The following is a function pointer pointing to the function that determines whether the button is pressed or not. */
+  rt_uint8_t (*Read_Button_Level)(void); /* Read the button level function, you need to implement */
   
   char Name[BTN_NAME_MAX];
-  	
-  rt_uint8_t Button_State              :   4;	  /* 按键当前状态（按下还是弹起） */
-  rt_uint8_t Button_Last_State         :   4;	  /* 上一次的按键状态，用于判断双击 */
-  rt_uint8_t Button_Trigger_Level      :   2;    /* 按键触发电平 */
-  rt_uint8_t Button_Last_Level         :   2;    /* 按键当前电平 */
   
-  rt_uint8_t Button_Trigger_Event;     /* 按键触发事件，单击，双击，长按等 */
+  rt_uint8_t Button_State              :   4;  /* The current state of the button (pressed or bounced) */
+  rt_uint8_t Button_Last_State         :   4;  /* The last button state used to determine the double click */
+  rt_uint8_t Button_Trigger_Level      :   2;    /* Button trigger level */
+  rt_uint8_t Button_Last_Level         :   2;    /* Button current level */
+  
+  rt_uint8_t Button_Trigger_Event;     /* Button trigger event, click, double click, long press, etc. */
   
   Button_CallBack CallBack_Function[number_of_event];
   
-	rt_uint8_t Button_Cycle;	           /* 连续按键周期 */
+  rt_uint8_t Button_Cycle;            /* Continuous button cycle */
   
-  rt_uint8_t Timer_Count;			/* 计时 */
-	rt_uint8_t Debounce_Time;		/* 消抖时间 */
+  rt_uint8_t Timer_Count;     /* Timing */
+  rt_uint8_t Debounce_Time;    /* Debounce time */
   
-	rt_uint8_t Long_Time;		  /* 按键按下持续时间 */
+  rt_uint8_t Long_Time;      /* Button press duration */
   
   struct button *Next;
   
@@ -100,7 +104,7 @@ typedef struct button
 
 
 
-/* 供外部调用的函数声明 */
+/* Function declaration for external calls */
 
 void Button_Create(const char *name,
                   Button_t *btn, 
