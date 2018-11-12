@@ -207,7 +207,7 @@ void Button_Cycle_Process(Button_t *btn)
       else if(btn->Button_State == BUTTON_DOWM)
       {
         btn->Button_State = BUTTON_UP;
-        RT_DEBUG_LOG(RT_DEBUG_THREAD,(" Õ∑≈¡À∞¥º¸"));
+        RT_DEBUG_LOG(RT_DEBUG_THREAD,("button release"));
       }
   }
   
