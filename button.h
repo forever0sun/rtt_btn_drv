@@ -9,17 +9,20 @@
 #define BTN_NAME_MAX  32     //名字最大为32字节
 
 /* 
-The button debounce time is 40ms, the recommended calling period is 20ms.
-It is considered valid only if the 40ms state is continuously detected, including bounce and press.
+ The button debounce time is 40ms, the recommended calling period is 20ms.
+ It is considered valid only if the 40ms state is continuously detected, including bounce and press.
 */
 
 //#define CONTINUOS_TRIGGER               //Whether to support continuous triggering, do not detect single-click and long-press if you send even
 
 /* Whether to support click and double-click while there is a trigger,
-if you choose to enable the macro definition, single-click double-clickback, but click will delay the response.
-Because it must be judged whether a double click is triggered after clicking, the delay time is the double-click interval BUTTON_DOUBLE_TIME.
-If you do not enable this macro definition, it is recommended that there is only one click/double click in the project. 
-Otherwise, a click will be triggered when the response is double-clicked.Because the double click must be generated after one press and release.
+ if you choose to enable the macro definition, single-click double-clickback,
+ but click will delay the response.Because it must be judged whether a 
+ double click is triggered after clicking, the delay time is the double-click 
+ interval BUTTON_DOUBLE_TIME.If you do not enable this macro definition,
+ it is recommended that there is only one click/double click in the project. 
+ Otherwise, a click will be triggered when the response is double-clicked.
+ Because the double click must be generated after one press and release.
 */
 
 //#define SINGLE_AND_DOUBLE_TRIGGER      
@@ -45,7 +48,7 @@ Otherwise, a click will be triggered when the response is double-clicked.Because
 #endif
 
 #ifndef BUTTON_LONG_TIME
-#define BUTTON_LONG_TIME       50/* For n seconds ((n-1)*call cycle)ms, think long press event */
+#define BUTTON_LONG_TIME       50  //For n seconds ((n-1)*call cycle)ms, think long press event
 #endif
 
 
@@ -53,7 +56,7 @@ Otherwise, a click will be triggered when the response is double-clicked.Because
         if(btn->CallBack_Function[event]) \
           btn->CallBack_Function[event]((Button_t*)btn)
 
-typedef void (*Button_CallBack)(void*);   /* The button triggers the callback function and needs to be implemented by the user. */
+typedef void (*Button_CallBack)(void*);   //The button triggers the callback function and needs to be implemented by the user.
 
 
 
@@ -66,7 +69,7 @@ typedef enum {
   BUTTON_CONTINUOS,
   BUTTON_CONTINUOS_FREE,
   BUTTON_ALL_RIGGER,
-  number_of_event, /* The event that triggered the callback */
+  number_of_event,                         /* The event that triggered the callback */
   NONE_TRIGGER
 }Button_Event;
 
@@ -81,21 +84,21 @@ typedef struct button
   
   char Name[BTN_NAME_MAX];
   
-  rt_uint8_t Button_State              :   4;  /* The current state of the button (pressed or bounced) */
-  rt_uint8_t Button_Last_State         :   4;  /* The last button state used to determine the double click */
+  rt_uint8_t Button_State              :   4;    /* The current state of the button (pressed or bounced) */
+  rt_uint8_t Button_Last_State         :   4;    /* The last button state used to determine the double click */
   rt_uint8_t Button_Trigger_Level      :   2;    /* Button trigger level */
   rt_uint8_t Button_Last_Level         :   2;    /* Button current level */
   
-  rt_uint8_t Button_Trigger_Event;     /* Button trigger event, click, double click, long press, etc. */
+  rt_uint8_t Button_Trigger_Event;               /* Button trigger event, click, double click, long press, etc. */
   
   Button_CallBack CallBack_Function[number_of_event];
   
-  rt_uint8_t Button_Cycle;            /* Continuous button cycle */
+  rt_uint8_t Button_Cycle;                       /* Continuous button cycle */
   
-  rt_uint8_t Timer_Count;     /* Timing */
-  rt_uint8_t Debounce_Time;    /* Debounce time */
+  rt_uint8_t Timer_Count;                        /* Timing */
+  rt_uint8_t Debounce_Time;                      /* Debounce time */
   
-  rt_uint8_t Long_Time;      /* Button press duration */
+  rt_uint8_t Long_Time;                          /* Button press duration */
   
   struct button *Next;
   
